@@ -1,0 +1,17 @@
+{
+  "name": "26webm-yearbook-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@arthurfporto.github.com:arthurfporto/26webm-yearbook-backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
