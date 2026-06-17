@@ -1,0 +1,33 @@
+info:
+  name: Alterar Aluno
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: http://localhost:3000/alunos/4
+  body:
+    type: json
+    data: |-
+      {
+        "cidade": "Montes Claros"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("deve retornar status 200", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("não deve retornar senhaHash", function() {
+          expect(res.getBody()).to.not.have.property('senhaHash');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
