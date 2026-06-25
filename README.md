@@ -1,4 +1,4 @@
-# Yearbook Backend 1
+# Yearbook Backend
 
 Este repositório contém o back-end do Yearbook Digital, mais branches de checkpoint que correspondem aos marcos intermediários do bloco.
 
