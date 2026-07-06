@@ -1,10 +1,12 @@
 import express from "express"; // importa o Express
-import alunosRouter from "./routes/alunos.js"; // importa o router de alunos <- NOVO
+import logger from "./middlewares/logger.js"; // importa o middleware de log
+import alunosRouter from "./routes/alunos.js"; // importa o router de alunos
 
 const app = express(); // cria a aplicação Express
 const PORT = 3000; // porta do servidor
 
-app.use(express.json()); // middleware que parseia JSON do body das requisições  <- NOVO
+app.use(express.json()); // 1º — parseia JSON do body
+app.use(logger); // 2º — registra log de cada requisição
 
 // rota raiz — boas-vindas
 app.get("/", (req, res) => {
@@ -16,7 +18,7 @@ app.get("/status", (req, res) => {
   res.json({ status: "ok", timestamp: new Date() });
 });
 
-// registra as rotas de alunos com prefixo /alunos  <- NOVO
+// registra as rotas de alunos com prefixo /alunos
 app.use("/alunos", alunosRouter);
 
 // inicia o servidor localmente — na Vercel essa parte é pulada
