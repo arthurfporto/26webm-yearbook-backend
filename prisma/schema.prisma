@@ -24,7 +24,7 @@ model Mensagem {
   autor     Aluno    @relation(fields: [autorId], references: [id], onDelete: Cascade)
   criadoEm  DateTime @default(now())
 }
-
+  
 // Model Aluno — representa a tabela "Aluno" no banco
 model Aluno {
   id            Int        @id @default(autoincrement())
