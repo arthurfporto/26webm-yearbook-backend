@@ -1,13 +1,17 @@
 meta {
-  name: Atualizar aluno
+  name: Atualizar aluno (logado)
   type: http
-  seq: 5
+  seq: 4
 }
 
 put {
   url: {{baseUrl}}/alunos/1
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }
 
 body:json {

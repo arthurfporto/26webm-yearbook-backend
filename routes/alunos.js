@@ -1,17 +1,18 @@
-import { Router } from "express"; // Router cria um mini-app de rotas
+import { Router } from "express";
 import {
   listarAlunos,
   buscarAluno,
   atualizarAluno,
   deletarAluno,
-} from "../controllers/alunosController.js"; // importa as funções do controller
+} from "../controllers/alunosController.js";
 import autenticar from "../middlewares/autenticar.js";
+import autorizar from "../middlewares/autorizar.js";
 
-const router = Router(); // cria o router
+const router = Router();
 
-router.get("/", listarAlunos); // GET /alunos
-router.get("/:id", buscarAluno); // GET /alunos/:id
-router.put("/:id", autenticar, atualizarAluno); // PUT /alunos/:id
-router.delete("/:id", deletarAluno); // DELETE /alunos/:id
+router.get("/", listarAlunos);
+router.get("/:id", buscarAluno);
+router.put("/:id", autenticar, atualizarAluno);
+router.delete("/:id", autenticar, autorizar("ADMIN"), deletarAluno);
 
-export default router; // exporta o router para usar no index.js
+export default router;

@@ -43,11 +43,25 @@ export async function criarMensagem(req, res, next) {
 export async function deletarMensagem(req, res, next) {
   const { id } = req.params;
   try {
-    await prisma.mensagem.delete({
+    const mensagem = await prisma.mensagem.findUnique({
       where: { id: Number(id) },
     });
+
+    if (!mensagem) {
+      return res.status(404).json({ erro: "Mensagem não encontrada" });
+    }
+
+    const ehDono = mensagem.autorId === req.aluno.id;
+    const ehAdmin = req.aluno.role === "ADMIN";
+    if (!ehDono && !ehAdmin) {
+      return res
+        .status(403)
+        .json({ erro: "Você não tem permissão para excluir esta mensagem" });
+    }
+
+    await prisma.mensagem.delete({ where: { id: Number(id) } });
     res.status(204).end();
   } catch (erro) {
-    res.status(404).json({ erro: "Mensagem não encontrada" });
+    next(erro);
   }
 }

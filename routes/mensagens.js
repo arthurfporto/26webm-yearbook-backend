@@ -8,8 +8,8 @@ import autenticar from "../middlewares/autenticar.js";
 
 const router = Router();
 
-router.get("/", listarMensagens); // GET /mensagens
-router.post("/", autenticar, criarMensagem); // POST /mensagens
-router.delete("/:id", deletarMensagem); // DELETE /mensagens/:id
+router.get("/", listarMensagens);
+router.post("/", autenticar, criarMensagem);
+router.delete("/:id", autenticar, deletarMensagem);
 
 export default router;

@@ -1,5 +1,5 @@
 meta {
-  name: Deletar aluno criado
+  name: DELETE aluno com token (ADMIN)
   type: http
   seq: 7
 }
@@ -15,12 +15,7 @@ auth:bearer {
 }
 
 tests {
-  test("deve retornar status 204", function() {
+  test("deve retornar 204", function() {
     expect(res.getStatus()).to.equal(204);
   });
-}
-
-docs {
-  DELETE /alunos exige ADMIN. Faça login como admin
-  (admin@email.com / admin123) antes de rodar este cleanup.
 }

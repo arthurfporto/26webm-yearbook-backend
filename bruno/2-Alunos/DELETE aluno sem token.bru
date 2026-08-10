@@ -1,0 +1,17 @@
+meta {
+  name: DELETE aluno sem token
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/alunos/{{alunoCriadoId}}
+  body: none
+  auth: none
+}
+
+tests {
+  test("deve retornar 401", function() {
+    expect(res.getStatus()).to.equal(401);
+  });
+}

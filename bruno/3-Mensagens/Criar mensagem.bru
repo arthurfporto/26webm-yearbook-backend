@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: https://26webm-yearbook-backend.vercel.app/mensagens
+  url: {{baseUrl}}/mensagens
   body: json
   auth: bearer
 }
@@ -16,8 +16,7 @@ auth:bearer {
 
 body:json {
   {
-    "texto": "Agora é web III, turma! Último ano!",
-    "autorId": 1
+    "texto": "O cachorro está indo embora"
   }
 }
 
@@ -31,7 +30,7 @@ tests {
   });
   
   test("deve conter o texto enviado", function() {
-    expect(res.getBody().texto).to.equal('Salve, turma! Último ano!');
+    expect(res.getBody().texto).to.equal('O cachorro está indo embora');
   });
   
   test("deve retornar id gerado", function() {
