@@ -21,7 +21,7 @@ model Mensagem {
   texto     String
   imagemUrl String?
   autorId   Int
-  autor     Aluno    @relation(fields: [autorId], references: [id])
+  autor     Aluno    @relation(fields: [autorId], references: [id], onDelete: Cascade)
   criadoEm  DateTime @default(now())
 }
 
