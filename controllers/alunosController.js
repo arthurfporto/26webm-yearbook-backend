@@ -43,6 +43,14 @@ export async function buscarAluno(req, res, next) {
 
 export async function atualizarAluno(req, res, next) {
   const { id } = req.params;
+
+  // só o dono pode editar o próprio perfil
+  if (Number(id) !== req.aluno.id) {
+    return res
+      .status(403)
+      .json({ erro: "Você só pode editar o próprio perfil" });
+  }
+
   const dados = req.body;
   try {
     const alunoAtualizado = await prisma.aluno.update({

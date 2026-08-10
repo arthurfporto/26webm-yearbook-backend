@@ -18,11 +18,11 @@ tests {
   test("deve retornar status 404", function() {
     expect(res.getStatus()).to.equal(404);
   });
-
+  
   test("deve seguir o padrão { erro: '...' }", function() {
     expect(res.getBody()).to.have.property('erro');
   });
-
+  
   test("deve retornar a mensagem de erro correta", function() {
     expect(res.getBody().erro).to.equal('Mensagem não encontrada');
   });

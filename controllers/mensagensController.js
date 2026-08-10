@@ -21,7 +21,7 @@ export async function listarMensagens(req, res, next) {
 
 export async function criarMensagem(req, res, next) {
   try {
-    const { texto, imagemUrl, autorId } = req.body;
+    const { texto, imagemUrl } = req.body;
 
     if (!texto) {
       return res.status(400).json({ erro: "O campo texto é obrigatório" });
@@ -31,7 +31,7 @@ export async function criarMensagem(req, res, next) {
       data: {
         texto,
         imagemUrl,
-        autorId: Number(autorId),
+        autorId: req.aluno.id, // autor = quem está logado
       },
     });
     res.status(201).json(novaMensagem);
