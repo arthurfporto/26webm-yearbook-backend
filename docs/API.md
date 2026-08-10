@@ -61,3 +61,9 @@ Base URL: `http://localhost:3000` (desenvolvimento)
 -Alunos só podem editar o próprio perfil
 -Apenas admins podem deletar alunos
 -Mensagens podem ser deletadas pelo dono ou por um admin
+
+## CORS
+
+Esta API tem CORS habilitado para qualquer origem. Você pode consumi-la
+de qualquer domínio (localhost, Vercel, etc.) sem configuração adicional
+no cliente.
