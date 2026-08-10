@@ -1,0 +1,31 @@
+meta {
+  name: Listar mensagens
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/mensagens
+  body: none
+  auth: none
+}
+
+tests {
+  test("deve retornar status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+  
+  test("deve retornar um array", function() {
+    expect(res.getBody()).to.be.an('array');
+  });
+  
+  test("cada mensagem deve ter campo autor com nome e fotoUrl", function() {
+    const mensagens = res.getBody();
+    mensagens.forEach(msg => {
+      expect(msg).to.have.property('autor');
+      expect(msg.autor).to.have.property('nome');
+      expect(msg.autor).to.have.property('fotoUrl');
+      expect(msg.autor).to.not.have.property('senhaHash');
+    });
+  });
+}

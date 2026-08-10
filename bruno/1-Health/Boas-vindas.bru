@@ -1,0 +1,21 @@
+meta {
+  name: Boas-vindas
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/
+  body: none
+  auth: none
+}
+
+tests {
+  test("deve retornar status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test("deve retornar a mensagem de boas-vindas", function() {
+    expect(res.getBody().mensagem).to.contain('Yearbook API');
+  });
+}

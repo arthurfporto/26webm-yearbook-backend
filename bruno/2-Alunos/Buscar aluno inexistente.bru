@@ -1,0 +1,25 @@
+meta {
+  name: Buscar aluno inexistente
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/alunos/999999
+  body: none
+  auth: none
+}
+
+tests {
+  test("deve retornar status 404", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+  
+  test("deve seguir o padrão { erro: '...' }", function() {
+    expect(res.getBody()).to.have.property('erro');
+  });
+  
+  test("deve retornar a mensagem de erro correta", function() {
+    expect(res.getBody().erro).to.equal('Aluno não encontrado');
+  });
+}

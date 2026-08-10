@@ -1,0 +1,28 @@
+meta {
+  name: Listar alunos
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/alunos
+  body: none
+  auth: none
+}
+
+tests {
+  test("deve retornar status 200", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test("deve retornar um array", function() {
+    expect(res.getBody()).to.be.an('array');
+  });
+
+  test("nenhum aluno deve conter senhaHash", function() {
+    const alunos = res.getBody();
+    alunos.forEach(aluno => {
+      expect(aluno).to.not.have.property('senhaHash');
+    });
+  });
+}

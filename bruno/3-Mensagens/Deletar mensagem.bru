@@ -1,0 +1,21 @@
+meta {
+  name: Deletar mensagem
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/mensagens/{{mensagemCriadaId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("deve retornar status 204", function() {
+    expect(res.getStatus()).to.equal(204);
+  });
+}

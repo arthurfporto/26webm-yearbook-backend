@@ -1,0 +1,43 @@
+meta {
+  name: Criar aluno
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/alunos
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "João Teste",
+    "email": "joao.teste@example.com",
+    "senhaHash": "senha123",
+    "cidade": "Salinas",
+    "frase": "Olá turma!"
+  }
+}
+
+script:post-response {
+  bru.setVar("alunoCriadoId", res.getBody().id);
+}
+
+tests {
+  test("deve retornar status 201", function() {
+    expect(res.getStatus()).to.equal(201);
+  });
+  
+  test("não deve retornar senhaHash", function() {
+    expect(res.getBody()).to.not.have.property('senhaHash');
+  });
+  
+  test("deve retornar id gerado", function() {
+    expect(res.getBody()).to.have.property('id');
+  });
+  
+  test("deve retornar o email enviado", function() {
+    expect(res.getBody().email).to.equal('joao.teste@example.com');
+  });
+}

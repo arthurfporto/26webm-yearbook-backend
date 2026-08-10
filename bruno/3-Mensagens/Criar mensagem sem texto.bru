@@ -1,0 +1,33 @@
+meta {
+  name: Criar mensagem sem texto
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/mensagens
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {}
+}
+
+tests {
+  test("deve retornar status 400", function() {
+    expect(res.getStatus()).to.equal(400);
+  });
+
+  test("deve seguir o padrão { erro: '...' }", function() {
+    expect(res.getBody()).to.have.property('erro');
+  });
+
+  test("deve indicar que texto é obrigatório", function() {
+    expect(res.getBody().erro).to.equal('O campo texto é obrigatório');
+  });
+}
