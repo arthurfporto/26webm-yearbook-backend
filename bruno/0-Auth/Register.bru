@@ -1,0 +1,42 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "João Teste",
+    "email": "joao.teste@email.com",
+    "senha": "joao123",
+    "cidade": "Salinas",
+    "frase": "Em testes",
+    "planosFuturos": "Aprender Node.js"
+  }
+}
+
+script:post-response {
+  if (res.getBody().id) {
+    bru.setVar("alunoCriadoId", res.getBody().id);
+  }
+}
+
+tests {
+  test("deve retornar 201", function() {
+    expect(res.getStatus()).to.equal(201);
+  });
+  
+  test("não deve retornar senhaHash", function() {
+    expect(res.getBody()).to.not.have.property('senhaHash');
+  });
+  
+  test("deve retornar id gerado", function() {
+    expect(res.getBody()).to.have.property('id');
+  });
+}

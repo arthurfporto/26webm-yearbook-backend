@@ -41,22 +41,6 @@ export async function buscarAluno(req, res, next) {
   }
 }
 
-export async function criarAluno(req, res, next) {
-  try {
-    const { nome, email, cidade, frase, planosFuturos } = req.body;
-    // garante que um valor seja enviado para o campo requerido `senhaHash`
-    const senhaHash = req.body.senhaHash ?? "";
-
-    const novoAluno = await prisma.aluno.create({
-      data: { nome, email, senhaHash, cidade, frase, planosFuturos },
-      select: selectSemSenha,
-    });
-    res.status(201).json(novoAluno);
-  } catch (erro) {
-    next(erro);
-  }
-}
-
 export async function atualizarAluno(req, res, next) {
   const { id } = req.params;
   const dados = req.body;

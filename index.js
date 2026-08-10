@@ -5,6 +5,7 @@ import logger from "./middlewares/logger.js"; // importa o middleware de log
 import tratarErro from "./middlewares/erro.js"; // novo import
 import alunosRouter from "./routes/alunos.js"; // importa o router de alunos
 import mensagensRouter from "./routes/mensagens.js"; // importa o router de mensagens
+import authRouter from "./routes/auth.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000; // lê do .env, com fallback para 3000
@@ -22,6 +23,9 @@ app.get("/", (req, res) => {
 app.get("/status", (req, res) => {
   res.json({ status: "ok", timestamp: new Date() });
 });
+
+// monta as rotas em /auth/register e /auth/login
+app.use("/auth", authRouter);
 
 // registra as rotas de alunos com prefixo /alunos
 app.use("/alunos", alunosRouter);
