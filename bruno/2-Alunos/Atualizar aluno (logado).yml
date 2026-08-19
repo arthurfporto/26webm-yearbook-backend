@@ -1,0 +1,44 @@
+info:
+  name: Atualizar aluno (logado)
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/alunos/{{alunoCriadoId}}"
+  body:
+    type: json
+    data: |-
+      {
+        "cidade": "Montes Claros",
+        "frase": "Frase atualizada"
+      }
+  auth:
+    type: bearer
+    token: "{{tokenDono}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("deve retornar status 200", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("não deve retornar senhaHash", function() {
+          expect(res.getBody()).to.not.have.property('senhaHash');
+        });
+
+        test("deve refletir a cidade atualizada", function() {
+          expect(res.getBody().cidade).to.equal('Montes Claros');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: |-
+  Requer token do DONO do perfil ({{alunoCriadoId}}).
+  Faça login com o aluno registrado (João) antes de rodar.

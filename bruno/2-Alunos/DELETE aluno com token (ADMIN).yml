@@ -1,0 +1,25 @@
+info:
+  name: DELETE aluno com token (ADMIN)
+  type: http
+  seq: 7
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/alunos/{{alunoCriadoId}}"
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("deve retornar 204", function() {
+          expect(res.getStatus()).to.equal(204);
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

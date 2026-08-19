@@ -1,0 +1,38 @@
+info:
+  name: Login Maria
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "maria@email.com",
+        "senha": "senha123"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        if (res.getBody().token) {
+          bru.setVar("token", res.getBody().token);
+        }
+    - type: tests
+      code: |-
+        test("deve retornar 200", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("deve retornar um token", function() {
+          expect(res.getBody()).to.have.property('token');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

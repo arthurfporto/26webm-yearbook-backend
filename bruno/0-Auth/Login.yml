@@ -1,0 +1,43 @@
+info:
+  name: Login
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "joao.test2e@email.com",
+        "senha": "joao123"
+      }
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        if (res.getBody().token) {
+          bru.setVar("tokenDono", res.getBody().token);
+        }
+    - type: tests
+      code: |-
+        test("deve retornar 200", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("deve retornar um token", function() {
+          expect(res.getBody()).to.have.property('token');
+        });
+
+        test("não deve retornar o aluno (nem senhaHash)", function() {
+          expect(res.getBody()).to.not.have.property('aluno');
+          expect(res.getBody()).to.not.have.property('senhaHash');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

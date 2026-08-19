@@ -30,17 +30,49 @@ async function main() {
   });
   console.log("Admin criado:", admin.nome);
 
-  const jaTemMensagem = await prisma.mensagem.findFirst({
-    where: { autorId: maria.id },
+  const joao = await prisma.aluno.upsert({
+    where: { email: "joao.test2e@email.com" },
+    update: {},
+    create: {
+      nome: "João Teste",
+      email: "joao.test2e@email.com",
+      senhaHash: await hashSenha("joao123"),
+      cidade: "Salinas",
+      frase: "Em testes",
+      planosFuturos: "Aprender Node.js",
+    },
   });
-  if (!jaTemMensagem) {
-    const mensagem = await prisma.mensagem.create({
-      data: {
-        texto: "Salve, turma! Vamos com tudo nesse último ano!",
-        autorId: maria.id,
-      },
+  console.log("Aluno criado:", joao.nome);
+
+  console.log("Usuários de desenvolvimento:");
+  console.log("Maria: maria@email.com / senha123");
+  console.log("João: joao.test2e@email.com / joao123");
+  console.log("Admin: admin@email.com / admin123");
+
+  const mensagens = [
+    {
+      texto: "Salve, turma! Vamos com tudo nesse último ano!",
+      autorId: maria.id,
+    },
+    {
+      texto: "Não esqueçam de enviar as fotos para o yearbook.",
+      autorId: joao.id,
+    },
+    {
+      texto: "A comissão está organizando a página da turma.",
+      autorId: maria.id,
+    },
+  ];
+
+  for (const dados of mensagens) {
+    const jaTemMensagem = await prisma.mensagem.findFirst({
+      where: dados,
     });
-    console.log("Mensagem criada:", mensagem.texto);
+
+    if (!jaTemMensagem) {
+      const mensagem = await prisma.mensagem.create({ data: dados });
+      console.log("Mensagem criada:", mensagem.texto);
+    }
   }
 }
 
