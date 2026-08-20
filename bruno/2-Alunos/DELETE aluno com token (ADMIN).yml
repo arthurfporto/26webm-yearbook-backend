@@ -8,7 +8,7 @@ http:
   url: "{{baseUrl}}/alunos/{{alunoCriadoId}}"
   auth:
     type: bearer
-    token: "{{token}}"
+    token: "{{tokenAdmin}}"
 
 runtime:
   scripts:

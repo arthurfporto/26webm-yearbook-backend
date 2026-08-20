@@ -1,3 +1,5 @@
+name: local
 variables:
   - name: baseUrl
-    value: http://localhost:3000
+    value: https://scaling-broccoli-vq5ggqpx6xq3pw9g-3000.app.github.dev
+    description: ""

@@ -10,12 +10,14 @@ http:
     type: json
     data: |-
       {
-        "email": "joao.test2e@email.com",
+        "email": "{{emailAlunoCriado}}",
         "senha": "joao123"
       }
 
 runtime:
   scripts:
+    - type: before-request
+      code: bru.deleteVar("tokenDono");
     - type: after-response
       code: |-
         if (res.getBody().token) {

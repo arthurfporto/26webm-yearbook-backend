@@ -14,12 +14,17 @@ http:
       }
   auth:
     type: bearer
-    token: "{{token}}"
+    token: "{{tokenAdmin}}"
 
 runtime:
   scripts:
+    - type: before-request
+      code: bru.deleteVar("mensagemCriadaId");
     - type: after-response
-      code: bru.setVar("mensagemCriadaId", res.getBody().id);
+      code: |-
+        if (res.getStatus() === 201 && res.getBody().id) {
+          bru.setVar("mensagemCriadaId", res.getBody().id);
+        }
     - type: tests
       code: |-
         test("deve retornar status 201", function() {

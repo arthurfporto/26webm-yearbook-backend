@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/alunos/1"
+  url: "{{baseUrl}}/alunos/{{alunoCriadoId}}"
 
 runtime:
   scripts:
@@ -20,7 +20,7 @@ runtime:
         });
 
         test("deve retornar o aluno correto", function() {
-          expect(res.getBody().id).to.equal(1);
+          expect(res.getBody().id).to.equal(Number(bru.getVar('alunoCriadoId')));
         });
 
 settings:

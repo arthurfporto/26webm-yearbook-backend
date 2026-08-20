@@ -16,10 +16,12 @@ http:
 
 runtime:
   scripts:
+    - type: before-request
+      code: bru.deleteVar("tokenAdmin");
     - type: after-response
       code: |-
         if (res.getBody().token) {
-          bru.setVar("token", res.getBody().token);
+          bru.setVar("tokenAdmin", res.getBody().token);
         }
     - type: tests
       code: |-
