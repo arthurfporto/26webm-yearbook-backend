@@ -1,6 +1,7 @@
 import { verificarToken } from "../utils/jwt.js";
+import prisma from "../prisma/client.js";
 
-export default function autenticar(req, res, next) {
+export default async function autenticar(req, res, next) {
   const header = req.headers.authorization;
 
   if (!header || !header.startsWith("Bearer ")) {
@@ -9,11 +10,26 @@ export default function autenticar(req, res, next) {
 
   const token = header.split(" ")[1];
 
+  let payload;
   try {
-    const payload = verificarToken(token);
-    req.aluno = { id: payload.id, role: payload.role };
-    next();
+    payload = verificarToken(token);
   } catch (erro) {
     return res.status(401).json({ erro: "Token inválido ou expirado" });
+  }
+
+  try {
+    const aluno = await prisma.aluno.findUnique({
+      where: { id: payload.id },
+      select: { id: true, role: true },
+    });
+
+    if (!aluno) {
+      return res.status(401).json({ erro: "Token inválido ou expirado" });
+    }
+
+    req.aluno = aluno;
+    next();
+  } catch (erro) {
+    next(erro);
   }
 }
